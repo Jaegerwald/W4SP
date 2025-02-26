@@ -19,4 +19,4 @@ A git-based static MediaWiki alternative
 - Markdown format
 - Custom `<page-link>` element to refer to other Wiki pages
 
-<sub>zoid was here</sub>
+<sub>zoid & jae were here</sub>
