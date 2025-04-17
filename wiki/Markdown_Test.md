@@ -1,6 +1,7 @@
 ---
 title: Markdown Syntax
 type: default
+blurb: Standard markdown test.
 ---
 
 # Markdown: Syntax

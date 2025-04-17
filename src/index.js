@@ -119,22 +119,39 @@ function createSearchStrings(pages) {
 }
 
 async function search(query) {
+    if (query == "") {
+        setSpecialPage("Contents");
+        return;
+    }
+
     let pages = await getJson("index.json");
     let searchStrings = createSearchStrings(pages);
-    let matches = [];
 
-    await setPage("src/search.md");
+    await setPage("/src/search.md");
 
-    searchStrings.forEach(searchString => {
-        if (searchString[0].toLowerCase().includes(query.toLowerCase())) {
-            matches.push(searchString[1]);
-        }
+    const data = searchStrings.map(([name, value]) => ({
+        name,
+        value
+    }));
+    
+    const fuse = new Fuse(data, {
+        keys: ["name"],
+        includeScore: false,
+        threshold: 0.4
     });
+    
+    const results = fuse.search(query);
+    const matches = results.map(result => result.item.value);
 
     let resultContainer = document.querySelector("#wiki-searchResults ul");
+    let resultInfo = document.querySelector("#wiki-searchResults #info");
 
-    if (matches.length > 0) {
-        resultContainer.innerHTML = "";
+    document.title = `Search results for "${query}"`;
+
+    if (matches.length > 0 && matches.length < 2) {
+        resultInfo.innerText = `1 result for "${query}"`;
+    } else if (matches.length > 1) {
+        resultInfo.innerText = `${matches.length} results for "${query}"`;
     }
 
     matches.forEach(page => {
@@ -155,7 +172,7 @@ let searchInput = document.querySelector("#search > input");
 let searchButton = document.querySelector("#search > button");
 
 searchButton.addEventListener("click", function () {
-    search(searchInput.value);
+    window.location.hash = "#/search/" + searchInput.value;
 });
 
 // Adding keyup event listener to the password input
@@ -167,17 +184,12 @@ searchInput.addEventListener("keyup", function (event) {
 
 // #region Special Pages
 
-function specialPages() {
-    let special = window.location.hash.split("#/wiki/Special:",2)[1]
-    setSpecialPage(special)
-}
-
 async function setSpecialPage(special) {
-    await setPage(`src/special/${special}.md`);
+    await setPage(`/src/special/${special}.md`);
 
     let allScripts = document.getElementsByTagName("script");
     iterrHtml(allScripts, function (element) {
-        if (element.src == `src/special/${special}.js`) {
+        if (element.src.includes(`src/special/${special}.js`)) {
             element.remove();
         }
     });
@@ -231,7 +243,11 @@ function loadPageFromHash() {
     fallbackHash();
 
     if (window.location.hash.startsWith("#/wiki/Special:")) {
-        specialPages();
+        setSpecialPage(window.location.hash.split("#/wiki/Special:",2)[1]);
+        return;
+    }
+    if (window.location.hash.startsWith("#/search/")) {
+        search(decodeURIComponent(window.location.hash.split("#/search/", 2)[1]));
         return;
     }
 
@@ -248,6 +264,7 @@ function fallbackHash() {
         case "#/wiki/":
         case "#/wiki/Special":
         case "#/wiki/Special:":
+        case "#/search":
             window.location.hash = "/wiki/Main_Page";
             return;
     }

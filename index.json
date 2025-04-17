@@ -1,19 +1,27 @@
 [
     {
-        "title": "Playground for fooling around",
-        "page": "Playground"
+        "title": "Contact",
+        "blurb": "Information on how and where to reach to us.",
+        "page": "Contact"
     },
     {
         "title": "This file doesn't have a header!",
         "page": "Headerless_File"
     },
     {
+        "title": "Main Page",
+        "blurb": "W4SP is a Wiki System designed to be hosted on static pages.",
+        "page": "Main_Page"
+    },
+    {
         "title": "Markdown Syntax",
+        "blurb": "Standard markdown test.",
         "page": "Markdown_Test"
     },
     {
-        "title": "Main Page",
-        "page": "Main_Page"
+        "title": "Playground for fooling around",
+        "blurb": "Place for testing formatting, editable to free will.",
+        "page": "Playground"
     },
     {
         "title": "File in a Folder",

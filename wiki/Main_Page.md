@@ -1,6 +1,7 @@
 ---
 title: Main Page
 type: no-title
+blurb: W4SP is a Wiki System designed to be hosted on static pages.
 ---
 
 <h1 align="center">Welcome to the <img src="../img/wasp_text.png" height="32px" style="vertical-align: middle;"> demo!</h1>

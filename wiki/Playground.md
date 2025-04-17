@@ -1,6 +1,7 @@
 ---
 title: Playground for fooling around
 type: default
+blurb: Place for testing formatting, editable to free will.
 ---
 
 | asd | asd | asd | asd | asd |

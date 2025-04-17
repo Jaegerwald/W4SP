@@ -5,5 +5,33 @@
     "branch": "main",
     "theme": "src/themes/nest-modern.css",
     "logo": "img/wasp.png",
-    "logo_text": "img/wasp_text.png"
+    "logo_text": "img/wasp_text.png",
+
+    "sidebar": {
+        "pages": [
+            {
+                "name": "Main page",
+                "link": "/wiki/Main_Page"
+            },
+            {
+                "name": "Contents",
+                "link": "/wiki/Special:Contents"
+            },
+            {
+                "name": "Contact us",
+                "link": "/wiki/Contact"
+            }
+        ],
+        "links": [
+            {
+                "name": "W4SP GitHub",
+                "link": "https://github.com/JaegerwaldDev/W4SP"
+            },
+            {
+                "name": "Documentation",
+                "link": "https://github.com/JaegerwaldDev/W4SP/wiki"
+            }
+        ],
+        "footer": "Don't like this theme? Don't worry - you can make W4SP your own! Just specify a custom theme stylesheet in the config and you can change stuff to your heart's content!"
+    }
 }

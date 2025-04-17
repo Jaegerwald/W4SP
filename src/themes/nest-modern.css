@@ -242,3 +242,6 @@ main {
     border-bottom-left-radius: 16px;
     margin-bottom: 16px;
 }
+#titleContainer #title {
+    margin-left: 16px;
+}

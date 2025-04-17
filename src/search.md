@@ -1,17 +1,19 @@
 ---
 title: Search Results
-type: default
+type: no-title
 ---
 
 <!-- DO NOT MODIFY THE CONTENTS OF THIS FILE UNLESS YOU SPECIFICALLY KNOW WHAT YOU ARE DOING. -->
 
 <div id="wiki-searchResults">
-    <ul>
-        <i>Search query had no results.</i>
-    </ul>
+    <i id="info">Search query had no results.</i>
+    <ul></ul>
 </div>
 
 <style>
+    #wiki-searchResults #info {
+        margin-left: 16px;
+    }
     #wiki-searchResults ul {
         list-style-type: none;
         margin-bottom: 32px;
