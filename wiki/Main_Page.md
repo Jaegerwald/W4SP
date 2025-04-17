@@ -1,5 +1,5 @@
 ---
-title: W4SP
+title: Main Page
 type: no-title
 ---
 
@@ -19,6 +19,7 @@ This demo is built specifically around showcasing what W4SP is able to do! We'll
 - <page-link href="/wiki/Markdown_Test">Markdown Test</page-link>
 - <page-link href="/wiki/Playground">Playground</page-link>
 - <page-link href="/wiki/Headerless_File">Headerless File (for debugging)</page-link>
+- <page-link href="/wiki/some_folder/File_in_a_Folder">File in a folder (for indexing testing)</page-link>
 
 ---
 

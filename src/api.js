@@ -53,24 +53,38 @@ async function getMarkdown(url) {
             result.raw = data;
 
             if (data.startsWith("---")) {
-                data = data.split("---");
-                result.meta = toObject(data[1].trim());
-
-                if (!("title" in result.meta)) {
-                    result.meta.title = "Unkown Page (No Title)";
+                const fmRegex = /^\s*---\s*([\s\S]*?)\s*---/;
+                const match = data.match(fmRegex);
+                let meta = {};
+                if (match) {
+                    const frontmatter = match[1];
+                    frontmatter.split(/\r?\n/).forEach((line) => {
+                        const kv = line.match(/^\s*(\w+)\s*:\s*(.+)\s*$/);
+                        if (kv) {
+                            const key = kv[1].toLowerCase();
+                            if (["title", "type"].includes(key)) {
+                                meta[key] = kv[2].trim();
+                            }
+                        }
+                    });
                 }
-                if (!("type" in result.meta)) {
-                    result.meta.type = "default";
+                if (!meta.title) {
+                    const titleMatchPipe = data.match(/\|\s*title\s*\|\s*(.*?)\s*\|/i);
+                    if (titleMatchPipe) {
+                        meta.title = titleMatchPipe[1].trim();
+                    } else {
+                        const headerMatch = data.match(/^#\s*(.+)/m);
+                        meta.title = headerMatch ? headerMatch[1].trim() : "Unknown Page (No Title)";
+                    }
                 }
-
-                data = data.splice(2, data.length);
-
-                result.html = marked.parse(data.join("---"));
+                if (!meta.type) {
+                    meta.type = "default";
+                }
+                const content = data.replace(fmRegex, "").trim();
+                result.meta = meta;
+                result.html = marked.parse(content);
             } else {
-                result.meta = {
-                    title: "Unkown Page (No Title)",
-                    type: "default",
-                };
+                result.meta = { title: "Unknown Page (No Title)", type: "default" };
                 result.html = marked.parse(data);
             }
         });

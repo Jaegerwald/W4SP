@@ -18,5 +18,6 @@ A git-based static MediaWiki alternative
 - Entirely client-side, aside from the git repository
 - Markdown format
 - Custom `<page-link>` element to refer to other Wiki pages
+- Modular Special pages
 
 <sub>zoid & jae were here</sub>

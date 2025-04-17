@@ -1,5 +1,4 @@
-body.no-title > nav > h1,
-body.no-title > nav > hr {
+body.no-title > nav > #titleContainer {
     display: none;
 }
 body.no-title > nav {

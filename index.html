@@ -22,7 +22,7 @@
             <b>Main menu</b>
             <ul>
                 <li><page-link href="/wiki/Main_Page">Main page</page-link></li>
-                <li><a>Contents</a></li>
+                <li><page-link href="/wiki/Special:Contents">Contents</page-link></li>
                 <li><a>Contact us</a></li>
             </ul>
         </p><!--
@@ -33,6 +33,7 @@
                 <li><a>Help</a></li>
                 <li><a>Recent changes</a></li>
                 <li><a>Upload file</a></li>
+                i am fucking losing it
             </ul>
         </p> -->
         <hr>
@@ -52,11 +53,15 @@
         </span>
     </header>
     <nav class="panel">
-        <h1 id="title"></h1>
-        <hr>
-        <button class="tab" id="tabHistory">Commit History</button>
-        <button class="tab" id="tabSource">Source</button>
-        <button class="tab active" id="tabRead">Read</button>
+        <span id="titleContainer">
+            <h1 id="title"></h1>
+            <hr>
+        </span>
+        <span id="tabContainer">
+            <button class="tab" id="tabHistory">Commit History</button>
+            <button class="tab" id="tabSource">Source</button>
+            <button class="tab active" id="tabRead">Read</button>
+        </span>
     </nav>
     <main class="panel">
         <div class="page active" id="pageRead"></div>

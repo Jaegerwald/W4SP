@@ -8,6 +8,14 @@
     --clr-dark-7: #777;
     --clr-dark-8: #888;
     --clr-dark-9: #999;
+
+    --clr-light-1: #fff;
+    --clr-light-2: #eee;
+    --clr-light-3: #ddd;
+    --clr-light-4: #ccc;
+    --clr-light-5: #bbb;
+    --clr-light-6: #aaa;
+
     --clr-accent: #fd0;
     --clr-accent-2: #fd08;
 
@@ -17,7 +25,7 @@
 /* #region *//* Main */
 
 body {
-    color: white;
+    color: var(--clr-light-1);
     font-family: monospace;
 
     accent-color: var(--clr-accent);
@@ -34,8 +42,14 @@ html {
     border-top: 1px var(--clr-dark-3) solid;
 }
 
+span#lastChanged {
+    display: inline-block;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
 nav .tab {
-    color: white;
+    color: var(--clr-light-1);
 }
 nav .tab:hover {
     border-bottom: 1px var(--clr-accent-2) solid;
@@ -68,7 +82,7 @@ input {
     background-color: var(--clr-dark-3);
     font-family: monospace;
     padding: 4px;
-    color: white;
+    color: var(--clr-light-1);
 }
 input:focus {
     border-color: var(--clr-dark-6);
@@ -83,6 +97,9 @@ button {
     color: var(--clr-dark-9);
     font-weight: bold;
     cursor: pointer;
+}
+button:hover {
+    color: var(--clr-light-1);
 }
 #search {
     display: flex;

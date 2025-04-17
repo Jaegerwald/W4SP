@@ -75,7 +75,7 @@ historyTab.addEventListener("click", async function () {
 
         if (commits.length == 0) {
             historyPage.innerHTML =
-                `<blockquote class="warning"><p>GitHub returned no commits, probably because this page hasn't been pushed to the repository yet. If it has been pushed, please create an issue to report this! Also make sure that it's been more than 15 since the last time you checked this tab.</p></blockquote>`;
+                `<blockquote class="warning"><p>GitHub returned no commits, probably because this page hasn't been pushed to the repository yet. If it has been pushed, please create an issue to report this! Also make sure that it's been more than 15 minutes since you've last checked this tab.</p></blockquote>`;
         }
 
         commits.forEach((commit) => {
@@ -102,13 +102,69 @@ historyTab.addEventListener("click", async function () {
     }
 });
 
+// #region Special Pages
+
+function specialPages() {
+    let special = window.location.hash.split("#/wiki/Special:",2)[1]
+    setSpecialPage(special)
+}
+
+async function setSpecialPage(special) {
+    let markdown;
+
+    if (!config.LOCAL) {
+        markdown = await getMarkdown(
+            `https://raw.githubusercontent.com/${config.repo}/refs/heads/${config.branch}/src/special/${special}.md`
+        );
+    } else {
+        markdown = await getMarkdown(`src/special/${special}.md`);
+    }
+
+    readPage.innerHTML = markdown.html;
+    markdownRaw.innerText = markdown.raw;
+
+    currentPage = `/src/special/${special}.md`;
+
+    let metadata = markdown.meta;
+
+    document.title = metadata.title;
+    title.innerText = metadata.title;
+
+    viewFileLink.href = `https://github.com/${config.repo}/tree/${config.branch}${currentPage}`;
+    editFileLink.href = `https://github.com/${config.repo}/edit/${config.branch}${currentPage}`;
+
+    switch (metadata.type) {
+        case "no-title":
+            document.body.className = "no-title";
+            break;
+        default:
+            document.body.removeAttribute("class");
+            break;
+    }
+
+    let allScripts = document.getElementsByTagName("script");
+    iterrHtml(allScripts, function (element) {
+        if (element.src == `src/special/${special}.js`) {
+            element.remove();
+        }
+    });
+
+    let script = document.createElement("script");
+    script.src = `src/special/${special}.js`;
+
+    document.body.appendChild(script);
+}
+
 // #region Page Navigation
 
 async function setPage(file) {
-    let markdown = await getMarkdown(
-        `https://raw.githubusercontent.com/${config.repo}/refs/heads/${config.branch}${file}`
-    );
-    if (config.LOCAL) {
+    let markdown;
+    
+    if (!config.LOCAL) {
+        markdown = await getMarkdown(
+            `https://raw.githubusercontent.com/${config.repo}/refs/heads/${config.branch}${file}`
+        );
+    } else {
         markdown = await getMarkdown(file);
     }
 
@@ -137,6 +193,12 @@ async function setPage(file) {
 
 function loadPageFromHash() {
     fallbackHash();
+
+    if (window.location.hash.startsWith("#/wiki/Special:")) {
+        specialPages();
+        return;
+    }
+
     currentPage = window.location.hash.replace("#", "") + ".md";
     setPage(currentPage);
 }
@@ -146,7 +208,12 @@ function fallbackHash() {
         case "":
         case "#":
         case "#/":
+        case "#/wiki":
+        case "#/wiki/":
+        case "#/wiki/Special":
+        case "#/wiki/Special:":
             window.location.hash = "/wiki/Main_Page";
+            return;
     }
 }
 
