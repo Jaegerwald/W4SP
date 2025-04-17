@@ -5,3 +5,8 @@ body.no-title > nav {
     height: auto;
     padding-top: 0px;
 }
+
+body.no-tabs > nav > #titleContainer > hr,
+body.no-tabs > nav > #tabContainer {
+    display: none;
+}

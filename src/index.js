@@ -102,6 +102,69 @@ historyTab.addEventListener("click", async function () {
     }
 });
 
+// #region Search
+
+function createSearchStrings(pages) {
+    let result = [];
+
+    pages.forEach(page => {
+        let searchString = `${page.page} ${page.title} `;
+        if ("blurb" in page) {
+            searchString += page.blurb;
+        }
+        result.push([searchString.toLowerCase(), page]);
+    });
+
+    return result
+}
+
+async function search(query) {
+    let pages = await getJson("index.json");
+    let searchStrings = createSearchStrings(pages);
+    let matches = [];
+
+    await setPage("src/search.md");
+
+    searchStrings.forEach(searchString => {
+        if (searchString[0].toLowerCase().includes(query.toLowerCase())) {
+            matches.push(searchString[1]);
+        }
+    });
+
+    let resultContainer = document.querySelector("#wiki-searchResults ul");
+
+    if (matches.length > 0) {
+        resultContainer.innerHTML = "";
+    }
+
+    matches.forEach(page => {
+        let pageItem = document.createElement("li");
+        pageItem.innerHTML = `<h2><page-link href="/wiki/${page.page}">${page.title}</page-link></h2>`; 
+
+        if ("blurb" in page) {
+            let pageDescription = document.createElement("span");
+            pageDescription.innerText = page.blurb;
+            pageItem.appendChild(pageDescription);
+        }
+       
+        resultContainer.appendChild(pageItem);
+    });
+}
+
+let searchInput = document.querySelector("#search > input");
+let searchButton = document.querySelector("#search > button");
+
+searchButton.addEventListener("click", function () {
+    search(searchInput.value);
+});
+
+// Adding keyup event listener to the password input
+searchInput.addEventListener("keyup", function (event) {
+    if (event.key == "Enter") {
+        searchButton.click();
+    }
+});
+
 // #region Special Pages
 
 function specialPages() {
@@ -110,37 +173,7 @@ function specialPages() {
 }
 
 async function setSpecialPage(special) {
-    let markdown;
-
-    if (!config.LOCAL) {
-        markdown = await getMarkdown(
-            `https://raw.githubusercontent.com/${config.repo}/refs/heads/${config.branch}/src/special/${special}.md`
-        );
-    } else {
-        markdown = await getMarkdown(`src/special/${special}.md`);
-    }
-
-    readPage.innerHTML = markdown.html;
-    markdownRaw.innerText = markdown.raw;
-
-    currentPage = `/src/special/${special}.md`;
-
-    let metadata = markdown.meta;
-
-    document.title = metadata.title;
-    title.innerText = metadata.title;
-
-    viewFileLink.href = `https://github.com/${config.repo}/tree/${config.branch}${currentPage}`;
-    editFileLink.href = `https://github.com/${config.repo}/edit/${config.branch}${currentPage}`;
-
-    switch (metadata.type) {
-        case "no-title":
-            document.body.className = "no-title";
-            break;
-        default:
-            document.body.removeAttribute("class");
-            break;
-    }
+    await setPage(`src/special/${special}.md`);
 
     let allScripts = document.getElementsByTagName("script");
     iterrHtml(allScripts, function (element) {
@@ -184,6 +217,9 @@ async function setPage(file) {
     switch (metadata.type) {
         case "no-title":
             document.body.className = "no-title";
+            break;
+        case "no-tabs":
+            document.body.className = "no-tabs";
             break;
         default:
             document.body.removeAttribute("class");

@@ -13,6 +13,7 @@ type: default
         -moz-column-count: 3;
         column-count: 3;
         list-style-type: none;
+        margin-bottom: 32px;
     }
     #wiki-contents h2 {
         margin: 0px;
