@@ -1,17 +1,12 @@
 [
     {
-        "title": "Playground for fooling around",
-        "blurb": "Place for testing formatting, editable to free will.",
-        "page": "Playground"
+        "title": "Contact",
+        "blurb": "Information on how and where to reach to us.",
+        "page": "Contact"
     },
     {
         "title": "This file doesn't have a header!",
         "page": "Headerless_File"
-    },
-    {
-        "title": "Markdown Syntax",
-        "blurb": "Standard markdown test.",
-        "page": "Markdown_Test"
     },
     {
         "title": "Main Page",
@@ -19,9 +14,14 @@
         "page": "Main_Page"
     },
     {
-        "title": "Contact",
-        "blurb": "Information on how and where to reach to us.",
-        "page": "Contact"
+        "title": "Markdown Syntax",
+        "blurb": "Standard markdown test.",
+        "page": "Markdown_Test"
+    },
+    {
+        "title": "Playground for fooling around",
+        "blurb": "Place for testing formatting, editable to free will.",
+        "page": "Playground"
     },
     {
         "title": "File in a Folder",
