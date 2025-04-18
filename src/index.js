@@ -7,6 +7,7 @@ let tabs = document.getElementsByClassName("tab");
 let page = document.getElementById("page");
 let pages = document.getElementsByClassName("page");
 let title = document.getElementById("title");
+let sidebar = document.getElementById("sidebar");
 
 let markdownRaw = document.getElementById("markdownRaw");
 let config = getConfig();
@@ -39,12 +40,72 @@ function setTheme(url) {
     theme.href = url;
 }
 
+setTheme(config.theme);
+
 let logo = document.getElementById("logo")
 logo.src = config.logo
 let logoTexts = document.querySelectorAll("img.logoText");
 logoTexts.forEach(img => {
     img.src = config.logo_text
 })
+
+// #region Sidebar Loading
+
+if ("sections" in config.sidebar) {
+    config.sidebar.sections.forEach((section) => {
+        let sectionDivider = document.createElement("hr");
+        let sectionContainer = document.createElement("p");
+
+        let sectionTitle = document.createElement("b");
+        sectionTitle.innerText = section.title;
+        sectionContainer.appendChild(sectionTitle);
+
+        let sectionList = document.createElement("ul");
+
+        section.links.forEach((link) => {
+            let sectionListItem = document.createElement("li");
+            if ("page" in link && link.page) {
+                let linkElement = `<page-link href="${link.link}">${link.name}</page-link>`
+                sectionListItem.innerHTML = linkElement;
+                sectionList.appendChild(sectionListItem);
+            } else {
+                let linkElement = document.createElement("a");
+                linkElement.href = link.link;
+                sectionListItem.appendChild(linkElement);
+                sectionList.appendChild(sectionListItem);
+            }
+        });
+
+        sectionContainer.appendChild(sectionList);
+        sidebar.appendChild(sectionDivider);
+        sidebar.appendChild(sectionContainer);
+    });
+}
+
+if ("links" in config.sidebar) {
+    let linksDivider = document.createElement("hr");
+    let linksContainer = document.createElement("p");
+    let links = [];
+
+    config.sidebar.links.forEach((link) => {
+        let linkElement = `<a href="${link.link}">${link.name}</a>`;
+        links.push(linkElement);
+    });
+
+    linksContainer.innerHTML = links.join(" • ");
+
+    sidebar.appendChild(linksDivider);
+    sidebar.appendChild(linksContainer);
+}
+
+if ("footer" in config.sidebar) {
+    let footerDivider = document.createElement("hr");
+    let footer = document.createElement("p");
+    footer.innerHTML = config.sidebar.footer;
+
+    sidebar.appendChild(footerDivider);
+    sidebar.appendChild(footer);
+}
 
 // #region Tab Logic
 
@@ -272,5 +333,3 @@ function fallbackHash() {
 
 window.onhashchange = loadPageFromHash;
 window.onload = loadPageFromHash;
-
-setTheme(config.theme)

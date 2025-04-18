@@ -1,6 +1,8 @@
 {
     "LOCAL": true,
 
+    "name": "W4SP",
+
     "repo": "JaegerwaldDev/W4SP",
     "branch": "main",
     "theme": "src/themes/nest-modern.css",
@@ -8,18 +10,31 @@
     "logo_text": "img/wasp_text.png",
 
     "sidebar": {
-        "pages": [
+        "sections": [
             {
-                "name": "Main page",
-                "link": "/wiki/Main_Page"
-            },
-            {
-                "name": "Contents",
-                "link": "/wiki/Special:Contents"
-            },
-            {
-                "name": "Contact us",
-                "link": "/wiki/Contact"
+                "title": "Main menu",
+                "links": [
+                    {
+                        "name": "Main page",
+                        "link": "/wiki/Main_Page",
+                        "page": true
+                    },
+                    {
+                        "name": "Contents",
+                        "link": "/wiki/Special:Contents",
+                        "page": true
+                    },
+                    {
+                        "name": "Random page",
+                        "link": "/wiki/Special:Random",
+                        "page": true
+                    },
+                    {
+                        "name": "Contact us",
+                        "link": "/wiki/Contact",
+                        "page": true
+                    }
+                ]
             }
         ],
         "links": [
