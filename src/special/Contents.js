@@ -2,7 +2,7 @@ async function special_wikiContents() {
     let list = document.querySelector("#wiki-contents ul");
     let pages = await getJson("index.json");
 
-    pages.forEach(page => {
+    for (let page of pages) {
         let pageItem = document.createElement("li");
         pageItem.innerHTML = `<h2><page-link href="/wiki/${page.page}">${page.title}</page-link></h2>`; 
 
@@ -13,6 +13,6 @@ async function special_wikiContents() {
         }
        
         list.appendChild(pageItem);
-    });
+    }
 }
 special_wikiContents();

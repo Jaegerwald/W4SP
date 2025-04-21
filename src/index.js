@@ -20,18 +20,22 @@ let viewRepositoryLink = document.getElementById("viewRepository");
 viewRepositoryLink.href = `https://github.com/${config.repo}/tree/${config.branch}`
 
 function hidePages() {
-    iterrHtml(pages, function (element) {
-        element.className = "page";
+    for (let page of pages) {
+        page.className = "page";
+    }
+}
+function unselectTabs() {
+    for (let tab of tabs) {
+        tab.className = "tab";
+    }
+}
+
+for (let tab of tabs) {
+    tab.addEventListener("click", function () {
+        unselectTabs();
+        tab.className = "tab active";
     });
 }
-iterrHtml(tabs, function (element) {
-    element.addEventListener("click", function () {
-        iterrHtml(tabs, function (element) {
-            element.className = "tab";
-        });
-        element.className = "tab active";
-    });
-});
 
 // #region Theme Loading
 let theme = document.getElementById("theme");
@@ -53,7 +57,6 @@ logoTexts.forEach(img => {
 
 if ("sections" in config.sidebar) {
     config.sidebar.sections.forEach((section) => {
-        let sectionDivider = document.createElement("hr");
         let sectionContainer = document.createElement("p");
 
         let sectionTitle = document.createElement("b");
@@ -77,13 +80,12 @@ if ("sections" in config.sidebar) {
         });
 
         sectionContainer.appendChild(sectionList);
-        sidebar.appendChild(sectionDivider);
+        sidebar.appendChild(document.createElement("hr"));
         sidebar.appendChild(sectionContainer);
     });
 }
 
 if ("links" in config.sidebar) {
-    let linksDivider = document.createElement("hr");
     let linksContainer = document.createElement("p");
     let links = [];
 
@@ -94,41 +96,35 @@ if ("links" in config.sidebar) {
 
     linksContainer.innerHTML = links.join(" • ");
 
-    sidebar.appendChild(linksDivider);
+    sidebar.appendChild(document.createElement("hr"));
     sidebar.appendChild(linksContainer);
 }
 
 if ("footer" in config.sidebar) {
-    let footerDivider = document.createElement("hr");
     let footer = document.createElement("p");
     footer.innerHTML = config.sidebar.footer;
 
-    sidebar.appendChild(footerDivider);
+    sidebar.appendChild(document.createElement("hr"));
     sidebar.appendChild(footer);
 }
 
 // #region Tab Logic
 
-let readTab = document.getElementById("tabRead");
-let sourceTab = document.getElementById("tabSource");
-let historyTab = document.getElementById("tabHistory");
-
 let readPage = document.getElementById("pageRead");
 let sourcePage = document.getElementById("pageSource");
 let historyPage = document.getElementById("pageHistory");
 
-readTab.addEventListener("click", function () {
-    hidePages();
-    readPage.className = "page active";
-});
-sourceTab.addEventListener("click", function () {
-    hidePages();
-    sourcePage.className = "page active";
-});
-historyTab.addEventListener("click", async function () {
-    hidePages();
-    historyPage.className = "page active";
+function createTab(id, customFunction = function () {}) {
+    document.getElementById("tab" + id[0].toUpperCase() + id.slice(1)).addEventListener("click", function () {
+        hidePages();
+        customFunction();
+        document.getElementById("page" + id[0].toUpperCase() + id.slice(1)).className = "page active";
+    });
+}
 
+createTab("read");
+createTab("source");
+createTab("history", async function () {
     try {
         let commits = await getCommits(currentPage);
 
@@ -180,7 +176,7 @@ function createSearchStrings(pages) {
 }
 
 async function search(query) {
-    if (query == "") {
+    if (!query) {
         setSpecialPage("Contents");
         return;
     }
@@ -238,9 +234,7 @@ searchButton.addEventListener("click", function () {
 
 // Adding keyup event listener to the password input
 searchInput.addEventListener("keyup", function (event) {
-    if (event.key == "Enter") {
-        searchButton.click();
-    }
+    if (event.key == "Enter") searchButton.click(); 
 });
 
 // #region Special Pages
@@ -249,11 +243,10 @@ async function setSpecialPage(special) {
     await setPage(`/src/special/${special}.md`);
 
     let allScripts = document.getElementsByTagName("script");
-    iterrHtml(allScripts, function (element) {
-        if (element.src.includes(`src/special/${special}.js`)) {
-            element.remove();
-        }
-    });
+
+    for (let element of allScripts)
+    if (element.src.includes(`src/special/${special}.js`))
+    element.remove();
 
     let script = document.createElement("script");
     script.src = `src/special/${special}.js`;

@@ -91,12 +91,6 @@ async function getMarkdown(url) {
     return result;
 }
 
-function iterrHtml(htmlCollection, iterrateFunc) {
-    for (let i = 0; i < htmlCollection.length; i++) {
-        iterrateFunc(htmlCollection[i]);
-    }
-}
-
 function toObject(string) {
     result = {};
     string = string.replace(/\r/g, "");
