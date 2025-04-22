@@ -244,11 +244,21 @@ pre {
         background-color: var(--clr-dark-2);
         width: calc(100% - 64px);
         border-bottom: 1px var(--clr-dark-1) solid;
+        z-index: 8000;
+        height: unset;
+    }
+    #search:not(:has(input:placeholder-shown)) > input {
+        border-radius: 0px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
     }
     #search:not(:has(input:placeholder-shown)) > button {
         margin: 0px;
         margin-top: -1px;
-        height: 48px;
+        height: 48px !important;
+        border-radius: 0px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
     }
 }
 
