@@ -137,4 +137,11 @@ a, page-link {
         margin-left: unset !important;
         margin-right: unset !important;
     }
+
+    #sidebar.closed {
+        display: none;
+    }
+    body:has(#sidebar:not(.closed)) #search {
+        display: none;
+    }
 }

@@ -327,3 +327,11 @@ function fallbackHash() {
 
 window.onhashchange = loadPageFromHash;
 window.onload = loadPageFromHash;
+
+// #region Mobile Navigation
+
+let burger = document.getElementById("burger");
+burger.addEventListener("click", function () {
+    if (sidebar.className == "panel closed") sidebar.className = "panel"
+    else sidebar.className = "panel closed";
+});

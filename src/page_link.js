@@ -14,6 +14,7 @@ class PageLink extends HTMLElement {
                 element.className = "page";
             }
             document.getElementById("pageRead").className = "page active";
+            sidebar.className = "panel closed";
         });
     };
 };

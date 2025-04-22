@@ -21,4 +21,19 @@ type: default
     #wiki-contents li {
         margin-bottom: 16px;
     }
+    
+    @media only screen and (max-width: 1200px) {
+        #wiki-contents ul {
+            -webkit-column-count: 2;
+            -moz-column-count: 2;
+            column-count: 2;
+        }
+    }
+    @media only screen and (max-width: 800px) {
+        #wiki-contents ul {
+            -webkit-column-count: 1;
+            -moz-column-count: 1;
+            column-count: 1;
+        }
+    }
 </style>

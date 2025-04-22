@@ -229,6 +229,29 @@ pre {
     white-space: normal;
 }
 
+/* #region */ /* Mobile */
+
+@media only screen and (max-width: 800px) {
+    #sidebar {
+        border-right: 1px var(--clr-dark-1) solid;
+        z-index: 4000;
+    }
+    #search:not(:has(input:placeholder-shown)) {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        padding: 32px;
+        background-color: var(--clr-dark-2);
+        width: calc(100% - 64px);
+        border-bottom: 1px var(--clr-dark-1) solid;
+    }
+    #search:not(:has(input:placeholder-shown)) > button {
+        margin: 0px;
+        margin-top: -1px;
+        height: 48px;
+    }
+}
+
 /* #region *//* Nest */
 header, aside {
     background-color: transparent !important;
@@ -244,4 +267,21 @@ main {
 }
 #titleContainer #title {
     margin-left: 16px;
+}
+
+@media only screen and (max-width: 800px) {
+    main, nav {
+        border-radius: 0px !important;
+    }
+
+    aside {
+        top: 64px;
+        height: calc(100% - 128px);
+        background-color: var(--clr-dark-2-2) !important;
+        backdrop-filter: blur(16px) !important;
+        border: none !important;
+        border-top-right-radius: 16px;
+        border-bottom-right-radius: 16px;
+        box-shadow: 0px 0px 64px #0008;
+    }
 }
