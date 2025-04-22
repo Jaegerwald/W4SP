@@ -47,11 +47,11 @@ function setTheme(url) {
 setTheme(config.theme);
 
 let logo = document.getElementById("logo")
-logo.src = config.logo
+logo.src = config.logo;
 let logoTexts = document.querySelectorAll("img.logoText");
 logoTexts.forEach(img => {
-    img.src = config.logo_text
-})
+    img.src = config.logo_text;
+});
 
 // #region Sidebar Loading
 
@@ -230,6 +230,7 @@ let searchButton = document.querySelector("#search > button");
 
 searchButton.addEventListener("click", function () {
     window.location.hash = "#/search/" + searchInput.value;
+    searchInput.value = "";
 });
 
 // Adding keyup event listener to the password input

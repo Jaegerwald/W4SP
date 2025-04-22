@@ -109,6 +109,7 @@ button:hover {
 }
 #search button {
     margin-left: -1px;
+    z-index: 15;
 }
 
 footer {

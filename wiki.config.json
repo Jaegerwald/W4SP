@@ -5,7 +5,7 @@
 
     "repo": "JaegerwaldDev/W4SP",
     "branch": "main",
-    "theme": "src/themes/nest-modern.css",
+    "theme": "src/themes/wasp-yellow.css",
     "logo": "img/wasp.png",
     "logo_text": "img/wasp_text.png",
 
