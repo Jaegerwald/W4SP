@@ -74,6 +74,7 @@ if ("sections" in config.sidebar) {
             } else {
                 let linkElement = document.createElement("a");
                 linkElement.href = link.link;
+                linkElement.innerText = link.name;
                 sectionListItem.appendChild(linkElement);
                 sectionList.appendChild(sectionListItem);
             }
