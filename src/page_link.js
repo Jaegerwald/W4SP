@@ -4,6 +4,7 @@ class PageLink extends HTMLElement {
 
         this.addEventListener("auxclick", function(e) {
             if (e.button == 1) {
+                e.preventDefault();
                 window.open(window.location.origin + "/#" + this.getAttribute("href"), "_blank");
                 return;
             }
