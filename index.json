@@ -10,13 +10,13 @@
         "page": "Markdown_Test"
     },
     {
-        "title": "This file doesn't have a header!",
-        "page": "Headerless_File"
-    },
-    {
         "title": "Contact",
         "blurb": "Information on how and where to reach to us.",
         "page": "Contact"
+    },
+    {
+        "title": "This file doesn't have a header!",
+        "page": "Headerless_File"
     },
     {
         "title": "Main Page",
